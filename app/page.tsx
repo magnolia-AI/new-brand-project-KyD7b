@@ -9,7 +9,7 @@ const NEWS_ARTICLES = [
     title: "Global Summit Reaches Historic Climate Agreement",
     description: "World leaders commit to aggressive carbon reduction targets in unexpected breakthrough at COP30.",
     category: "WORLD",
-    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop",
+    image: "/images/global-summit.jpg",
     time: "2 MIN AGO",
     isBreaking: true
   },
@@ -18,7 +18,7 @@ const NEWS_ARTICLES = [
     title: "Local Hero Saves Neighborhood from Flash Flood",
     description: "Courageous act of bravery as resident rescues three families before emergency services arrived.",
     category: "LOCAL",
-    image: "https://images.unsplash.com/photo-1547619292-8816ee7cdd50?q=80&w=2070&auto=format&fit=crop",
+    image: "/images/local-hero.jpg",
     time: "15 MIN AGO",
     isBreaking: false
   },
@@ -27,7 +27,7 @@ const NEWS_ARTICLES = [
     title: "Star Striker Signs Record-Breaking Contract",
     description: "The league's top scorer secures move to champions in a deal worth over $250 million.",
     category: "SPORT",
-    image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=2186&auto=format&fit=crop",
+    image: "/images/star-striker.jpg",
     time: "1 HOUR AGO",
     isBreaking: false,
     theme: "sport"
@@ -37,7 +37,7 @@ const NEWS_ARTICLES = [
     title: "New Study Reveals Secret to Long-Term Memory",
     description: "Scientists discover neural pathway that explains why some memories last a lifetime while others fade.",
     category: "SCIENCE",
-    image: "https://images.unsplash.com/photo-1507413245164-6160d8298b31?q=80&w=2070&auto=format&fit=crop",
+    image: "/images/science-study.jpg",
     time: "3 HOURS AGO",
     isBreaking: false
   }
