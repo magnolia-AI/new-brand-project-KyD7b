@@ -1,31 +1,38 @@
-import './globals.css'
-import type { Metadata } from 'next'
-import { Toaster } from "@/components/ui/toaster"
-import { ThemeProvider } from '@/components/theme-provider'
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
+import { SiteHeader, SiteFooter } from "@/components/site-header";
+import { ThemeProvider } from "@/components/theme-provider";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Next.js Template',
-  description: 'A customizable template built with Next.js and Tailwind CSS',
-  icons: {
-    icon: '/favicon.ico',
-  },
-}
+  title: "THE GAZETTE | Latest News & Breaking Stories",
+  description: "Your trusted source for news, sports, culture, and business in the heart of the city.",
+};
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode
-}) {
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <html lang="en" className="h-full" suppressHydrationWarning>
-      <body className="h-full flex flex-col antialiased">
-        <ThemeProvider defaultTheme="light" attribute="class">
-          <main className="flex-1">
-            {children}
-          </main>
-          <Toaster />
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+        >
+          <div className="flex flex-col min-h-screen">
+            <SiteHeader />
+            <div className="grow">
+              {children}
+            </div>
+            <SiteFooter />
+          </div>
         </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }
+

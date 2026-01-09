@@ -1,83 +1,14 @@
 import Link from "next/link";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-
-const NEWS_ARTICLES = [
-  {
-    id: 1,
-    title: "Global Summit Reaches Historic Climate Agreement",
-    description: "World leaders commit to aggressive carbon reduction targets in unexpected breakthrough at COP30.",
-    category: "WORLD",
-    image: "/images/global-summit.jpg",
-    time: "2 MIN AGO",
-    isBreaking: true
-  },
-  {
-    id: 2,
-    title: "Local Hero Saves Neighborhood from Flash Flood",
-    description: "Courageous act of bravery as resident rescues three families before emergency services arrived.",
-    category: "LOCAL",
-    image: "/images/local-hero.jpg",
-    time: "15 MIN AGO",
-    isBreaking: false
-  },
-  {
-    id: 3,
-    title: "Star Striker Signs Record-Breaking Contract",
-    description: "The league's top scorer secures move to champions in a deal worth over $250 million.",
-    category: "SPORT",
-    image: "/images/star-striker.jpg",
-    time: "1 HOUR AGO",
-    isBreaking: false,
-    theme: "sport"
-  },
-  {
-    id: 4,
-    title: "New Study Reveals Secret to Long-Term Memory",
-    description: "Scientists discover neural pathway that explains why some memories last a lifetime while others fade.",
-    category: "SCIENCE",
-    image: "/images/science-study.jpg",
-    time: "3 HOURS AGO",
-    isBreaking: false
-  }
-];
+import { ARTICLES } from "@/lib/data";
 
 export default function HomePage() {
-  const breakingNews = NEWS_ARTICLES.find(a => a.isBreaking);
+  const breakingNews = ARTICLES.find(a => a.isBreaking);
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      {/* Newspaper Header */}
-      <header className="bg-primary pt-6 pb-4 border-b-4 border-black">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col items-center gap-2">
-            <h1 className="text-6xl md:text-8xl font-black text-black tracking-tighter italic select-none">
-              THE GAZETTE
-            </h1>
-            <div className="w-full flex justify-between border-y border-black/20 py-1 text-xs font-bold uppercase tracking-widest text-black/80">
-              <span>EST. 2026</span>
-              <span>FRIDAY, JANUARY 9, 2026</span>
-              <span>LATEST NEWS</span>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Nav */}
-      <nav className="bg-black text-white sticky top-0 z-50">
-        <div className="container mx-auto px-4">
-          <ul className="flex overflow-x-auto whitespace-nowrap gap-6 py-3 font-heading text-sm uppercase font-bold tracking-wider no-scrollbar">
-            <li><Link href="/" className="hover:text-primary transition-colors">Start</Link></li>
-            <li><Link href="#" className="hover:text-primary transition-colors text-destructive">News</Link></li>
-            <li><Link href="#" className="hover:text-primary transition-colors">Sport</Link></li>
-            <li><Link href="#" className="hover:text-primary transition-colors">Culture</Link></li>
-            <li><Link href="#" className="hover:text-primary transition-colors">Business</Link></li>
-            <li><Link href="#" className="hover:text-primary transition-colors">Opinion</Link></li>
-          </ul>
-        </div>
-      </nav>
-
+    <div className="bg-slate-50">
       <main className="container mx-auto px-4 py-6">
         {/* Breaking News Sticker */}
         {breakingNews && (
@@ -94,7 +25,7 @@ export default function HomePage() {
           {/* Main Column */}
           <div className="lg:col-span-8 space-y-8">
             {/* Top Story */}
-            {NEWS_ARTICLES.slice(0, 1).map((article) => (
+            {ARTICLES.slice(0, 1).map((article) => (
               <Card key={article.id} className="overflow-hidden border-0 bg-transparent shadow-none group cursor-pointer">
                 <div className="relative aspect-video overflow-hidden border-2 border-black">
                   <img 
@@ -118,7 +49,7 @@ export default function HomePage() {
                   <div className="flex items-center gap-2 pt-2 text-xs font-bold text-slate-500">
                     <span>{article.time}</span>
                     <span>•</span>
-                    <span>BY JANE DOE</span>
+                    <span>BY {article.author.toUpperCase()}</span>
                   </div>
                 </CardHeader>
               </Card>
@@ -126,7 +57,7 @@ export default function HomePage() {
 
             {/* Sub-grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {NEWS_ARTICLES.slice(1, 4).map((article) => (
+              {ARTICLES.slice(1, 4).map((article) => (
                 <Card key={article.id} className="border-0 bg-transparent shadow-none group cursor-pointer">
                   <div className={`relative aspect-square md:aspect-video overflow-hidden border-2 border-black ${article.category === 'SPORT' ? 'border-r-8 border-b-8' : ''}`}>
                     <img 
@@ -202,21 +133,6 @@ export default function HomePage() {
           </aside>
         </div>
       </main>
-
-      <footer className="bg-black text-white mt-12 py-12">
-        <div className="container mx-auto px-4 text-center space-y-6">
-          <h2 className="text-4xl font-black text-primary italic">THE GAZETTE</h2>
-          <div className="flex justify-center gap-6 text-xs uppercase font-bold tracking-widest text-slate-400 font-heading">
-            <Link href="#">About</Link>
-            <Link href="#">Contact</Link>
-            <Link href="#">Privacy Policy</Link>
-            <Link href="#">Terms</Link>
-          </div>
-          <p className="text-[10px] text-slate-600 font-body">
-            &copy; 2026 THE GAZETTE MEDIA GROUP. ALL RIGHTS RESERVED.
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }
