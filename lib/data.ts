@@ -1,17 +1,15 @@
-export type Category = "WORLD" | "LOCAL" | "SPORT" | "CULTURE" | "BUSINESS" | "SCIENCE" | "NEWS";
-
-export interface Article {
+export type Article = {
   id: number;
   title: string;
   description: string;
-  category: Category;
+  category: string;
   image: string;
   time: string;
   isBreaking?: boolean;
-  author: string;
-}
+  content?: string;
+};
 
-export const ARTICLES: Article[] = [
+export const ALL_ARTICLES: Article[] = [
   {
     id: 1,
     title: "Global Summit Reaches Historic Climate Agreement",
@@ -19,8 +17,7 @@ export const ARTICLES: Article[] = [
     category: "WORLD",
     image: "/images/global-summit.jpg",
     time: "2 MIN AGO",
-    isBreaking: true,
-    author: "Jane Doe"
+    isBreaking: true
   },
   {
     id: 2,
@@ -28,8 +25,7 @@ export const ARTICLES: Article[] = [
     description: "Courageous act of bravery as resident rescues three families before emergency services arrived.",
     category: "LOCAL",
     image: "/images/local-hero.jpg",
-    time: "15 MIN AGO",
-    author: "John Smith"
+    time: "15 MIN AGO"
   },
   {
     id: 3,
@@ -37,8 +33,7 @@ export const ARTICLES: Article[] = [
     description: "The league's top scorer secures move to champions in a deal worth over $250 million.",
     category: "SPORT",
     image: "/images/star-striker.jpg",
-    time: "1 HOUR AGO",
-    author: "Sport Reporter"
+    time: "1 HOUR AGO"
   },
   {
     id: 4,
@@ -46,44 +41,39 @@ export const ARTICLES: Article[] = [
     description: "Scientists discover neural pathway that explains why some memories last a lifetime while others fade.",
     category: "SCIENCE",
     image: "/images/science-study.jpg",
-    time: "3 HOURS AGO",
-    author: "Dr. Aris"
+    time: "3 HOURS AGO"
   },
   {
     id: 5,
-    title: "Modern Art Exhibition Opens to Critical Acclaim",
-    description: "The city's newest gallery features provocative works that challenge digital-age perceptions.",
+    title: "New Museum of Modern Art Opens Downtown",
+    description: "The city's newest cultural landmark features a massive collection of digital and physical installations.",
     category: "CULTURE",
-    image: "https://images.unsplash.com/photo-1499781350541-7783f6c6a0c8?q=80&w=2145&auto=format&fit=crop",
-    time: "5 HOURS AGO",
-    author: "Ava Culture"
+    image: "https://images.unsplash.com/photo-1554941068-a252680d25d9?q=80&w=2070&auto=format&fit=crop",
+    time: "5 HOURS AGO"
   },
   {
     id: 6,
-    title: "Tech Giants Announce Strategic Merger",
-    description: "Two of the world's largest software firms to combine forces in a move that could redefine the industry.",
+    title: "Interest Rates Hold Steady Amid Inflation Hopes",
+    description: "Central bank signal suggests the recent tightening cycle may finally be at an end.",
     category: "BUSINESS",
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop",
-    time: "6 HOURS AGO",
-    author: "Rich Midas"
+    image: "https://images.unsplash.com/photo-1611974714008-66d15274847b?q=80&w=2070&auto=format&fit=crop",
+    time: "6 HOURS AGO"
   },
   {
     id: 7,
-    title: "The Future of AI: What to Expect in 2026",
-    description: "Experts predict a shift toward more personalized, edge-computing based AI systems.",
-    category: "SCIENCE",
-    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2070&auto=format&fit=crop",
-    time: "8 HOURS AGO",
-    author: "Byte Master"
-  },
-  {
-    id: 8,
-    title: "Championship Finals: Underdog Team Takes Lead",
-    description: "A stunning performance in the first half leaves the favorites scrambling to recover.",
-    category: "SPORT",
-    image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=2070&auto=format&fit=crop",
-    time: "10 HOURS AGO",
-    author: "Sport Reporter"
+    title: "The Case for a Four-Day Work Week",
+    description: "Opinion: Why the standard five-day model is a relic of the past that hurts productivity.",
+    category: "OPINION",
+    image: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=2070&auto=format&fit=crop",
+    time: "12 HOURS AGO"
   }
+];
+
+export const CATEGORIES = [
+  { name: "News", slug: "news", color: "var(--destructive)" },
+  { name: "Sport", slug: "sport", color: "var(--sport-pink)" },
+  { name: "Culture", slug: "culture", color: "var(--culture-violet)" },
+  { name: "Business", slug: "business", color: "var(--foreground)" },
+  { name: "Opinion", slug: "opinion", color: "var(--primary)" },
 ];
 
