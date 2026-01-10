@@ -1,121 +1,113 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { NEWS_ARTICLES, CATEGORIES } from "@/lib/data";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-
-const CATEGORY_DATA: Record<string, { title: string, color: string, description: string }> = {
-  sport: {
-    title: "Sport",
-    color: "bg-sport-pink",
-    description: "The latest scores, highlights, and expert analysis from the world of sports.",
-  },
-  culture: {
-    title: "Culture",
-    color: "bg-culture-violet",
-    description: "Entertainment, arts, and the biggest cultural shifts happening right now.",
-  },
-  business: {
-    title: "Business",
-    color: "bg-black",
-    description: "Markets, startups, and global economic trends that matter.",
-  },
-  news: {
-    title: "News",
-    color: "bg-destructive",
-    description: "Breaking news and deep dives into current events around the globe.",
-  },
-  opinion: {
-    title: "Opinion",
-    color: "bg-primary",
-    description: "Provocative ideas and sharp analysis from our columnists.",
-  }
-};
-
-// Mock data for category articles
-const MOCK_ARTICLES = [
-  {
-    id: 1,
-    title: "The Future of Digital Currency in Emerging Markets",
-    excerpt: "How mobile payments are reshaping economies and challenging traditional banking systems.",
-    author: "MARCUS CHEN",
-    time: "45 MIN AGO",
-    isBreaking: false,
-    image: "https://images.unsplash.com/photo-1518186211198-592f6f571556?q=80&w=2070&auto=format&fit=crop"
-  },
-  {
-    id: 2,
-    title: "Behind the Scenes of the Year's Biggest Blockbuster",
-    excerpt: "Director reveals the technical challenges of filming without CGI in remote locations.",
-    author: "SARAH JENKINS",
-    time: "2 HOURS AGO",
-    isBreaking: true,
-    image: "https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=2059&auto=format&fit=crop"
-  },
-  {
-    id: 3,
-    title: "Tech Giants Announce New Privacy Standards",
-    excerpt: "A coordinated effort to standardize encryption across multiple platforms.",
-    author: "ALEX RIVERA",
-    time: "4 HOURS AGO",
-    isBreaking: false,
-    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop"
-  }
-];
 
 export default async function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const category = CATEGORY_DATA[slug.toLowerCase()];
+  const category = CATEGORIES.find((c) => c.slug === slug);
 
   if (!category) {
     notFound();
   }
 
+  const articles = NEWS_ARTICLES.filter(
+    (a) => a.category.toLowerCase() === slug.toLowerCase()
+  );
+
   return (
-    <div className="min-h-[70vh]">
+    <div className="min-h-screen bg-white">
       {/* Category Header */}
-      <div className={`${category.title === 'Sport' ? 'bg-[#E34F96]' : category.title === 'Culture' ? 'bg-[#782F79]' : 'bg-black'} text-white py-12`}>
+      <div 
+        className="py-12 border-b-8 border-black text-white"
+        style={{ backgroundColor: category.color }}
+      >
         <div className="container mx-auto px-4">
-          <h1 className="text-6xl md:text-9xl font-black italic uppercase tracking-tighter mb-4">
-            {category.title}
+          <h1 className="text-7xl md:text-9xl font-black italic tracking-tighter uppercase leading-none">
+            {category.name}
           </h1>
-          <p className="text-xl md:text-2xl font-body max-w-2xl opacity-90">
-            {category.description}
+          <p className="mt-4 font-heading text-xl font-bold tracking-widest uppercase">
+            The Latest in {category.name} • Live Coverage
           </p>
         </div>
       </div>
 
-      <main className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {MOCK_ARTICLES.map((article) => (
-            <Card key={article.id} className="rounded-none border-2 border-black overflow-hidden shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-none transition-all cursor-pointer group">
-              <div className="aspect-video relative overflow-hidden bg-slate-200">
-                <img 
-                  src={article.image} 
-                  alt={article.title}
-                  className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
-                />
-                {article.isBreaking && (
-                  <Badge className="absolute top-2 left-2 bg-destructive border-2 border-white rounded-none">
-                    BREAKING
-                  </Badge>
-                )}
-              </div>
-              <CardHeader className="p-4">
-                <CardTitle className="text-2xl font-black uppercase leading-tight group-hover:underline decoration-2">
-                  {article.title}
-                </CardTitle>
-                <div className="flex items-center gap-2 mt-2 text-[10px] font-bold text-slate-500 uppercase">
-                  <span>{article.time}</span>
-                  <span>•</span>
-                  <span>BY {article.author}</span>
+      <nav className="bg-black text-white px-4 border-b border-white/20">
+        <div className="container mx-auto">
+          <ul className="flex overflow-x-auto whitespace-nowrap gap-6 py-3 font-heading text-sm uppercase font-bold tracking-wider">
+            <li><Link href="/" className="hover:text-primary transition-colors">START</Link></li>
+            {CATEGORIES.map((cat) => (
+              <li key={cat.slug}>
+                <Link 
+                  href={`/category/${cat.slug}`} 
+                  className={`hover:text-primary transition-colors ${cat.slug === slug ? 'text-primary' : ''}`}
+                >
+                  {cat.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </nav>
+
+      <main className="container mx-auto px-4 py-12">
+        {articles.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+            {articles.map((article) => (
+              <Card key={article.id} className="border-0 bg-transparent shadow-none group cursor-pointer">
+                <div className="relative aspect-[16/9] overflow-hidden border-4 border-black mb-4">
+                  <img 
+                    src={article.image} 
+                    alt={article.title}
+                    className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div 
+                    className="absolute top-0 right-0 px-4 py-1 text-white font-black italic text-sm"
+                    style={{ backgroundColor: category.color }}
+                  >
+                    {article.category}
+                  </div>
                 </div>
-              </CardHeader>
-              <CardContent className="px-4 pb-4">
-                <p className="font-body text-sm text-slate-600">
-                  {article.excerpt}
-                </p>
-              </CardContent>
-            </Card>
-          ))}
+                <CardHeader className="p-0">
+                  <CardTitle className="text-3xl leading-tight group-hover:underline decoration-4">
+                    {article.title}
+                  </CardTitle>
+                  <p className="mt-3 text-lg font-body text-slate-700 line-clamp-3">
+                    {article.description}
+                  </p>
+                  <div className="flex items-center gap-4 mt-6 text-xs font-black uppercase tracking-widest text-slate-500">
+                    <span>{article.time}</span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-slate-300" />
+                    <span>{article.author}</span>
+                  </div>
+                </CardHeader>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-20 border-4 border-dashed border-slate-200">
+            <h2 className="text-3xl font-black italic text-slate-300">NO STORIES YET</h2>
+            <p className="font-body text-slate-400">Our reporters are currently investigating more {category.name} stories.</p>
+          </div>
+        )}
+
+        {/* Section Divider */}
+        <div className="mt-20 border-t-8 border-black pt-12">
+          <h2 className="text-4xl font-black italic mb-8">TRENDING IN {category.name}</h2>
+          <div className="space-y-4">
+            {[1, 2, 3].map((i) => (
+                <div key={i} className="flex gap-6 group cursor-pointer border-b border-slate-100 pb-4">
+                    <span className="text-6xl font-black text-slate-100 group-hover:text-primary transition-colors italic">0{i}</span>
+                    <div>
+                        <h4 className="font-heading font-black text-xl uppercase leading-none group-hover:underline">
+                            Major development expected in upcoming {category.name} report
+                        </h4>
+                        <p className="text-sm font-body text-slate-500 mt-1">Updates arriving in real-time as the story breaks.</p>
+                    </div>
+                </div>
+            ))}
+          </div>
         </div>
       </main>
     </div>
