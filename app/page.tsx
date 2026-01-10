@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { NEWS_ARTICLES, CATEGORIES } from "@/lib/data";
+import { NEWS_ARTICLES } from "@/lib/data";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -9,54 +9,15 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      {/* Newspaper Header */}
-      <header className="bg-primary pt-6 pb-4 border-b-4 border-black">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col items-center gap-2">
-            <h1 className="text-6xl md:text-8xl font-black text-black tracking-tighter italic select-none">
-              THE GAZETTE
-            </h1>
-            <div className="w-full flex justify-between border-y border-black/20 py-1 text-xs font-bold uppercase tracking-widest text-black/80">
-              <span>EST. 2026</span>
-              <span>FRIDAY, JANUARY 9, 2026</span>
-              <span>LATEST NEWS</span>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Nav */}
-      <nav className="bg-black text-white sticky top-0 z-50">
-        <div className="container mx-auto px-4">
-          <ul className="flex overflow-x-auto whitespace-nowrap gap-6 py-3 font-heading text-sm uppercase font-bold tracking-wider no-scrollbar">
-            <li><Link href="/" className="hover:text-primary transition-colors text-primary">Start</Link></li>
-            {CATEGORIES.map(cat => (
-              <li key={cat.slug}>
-                <Link 
-                  href={`/category/${cat.slug}`} 
-                  className={`hover:text-primary transition-colors ${cat.slug === 'news' ? 'text-destructive' : ''}`}
-                >
-                  {cat.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </nav>
-
       <main className="container mx-auto px-4 py-6">
         {/* Breaking News Sticker */}
         {breakingNews && (
           <div className="breaking-banner mb-6 flex items-center gap-4 animate-in fade-in slide-in-from-top duration-500">
             <div className="bg-black text-white px-3 py-1 text-sm animate-pulse">BREAKING</div>
-            <Link href={`/article/${breakingNews.slug}`} className="flex-1 truncate hover:underline">
-              {breakingNews.title}
-            </Link>
-            <Link href={`/article/${breakingNews.slug}`}>
-              <Button variant="outline" size="sm" className="bg-white/10 border-white/20 text-white hover:bg-white hover:text-black hidden md:flex">
-                READ NOW
-              </Button>
-            </Link>
+            <div className="flex-1 truncate">{breakingNews.title}</div>
+            <Button variant="outline" size="sm" className="bg-white/10 border-white/20 text-white hover:bg-white hover:text-black hidden md:flex">
+              READ NOW
+            </Button>
           </div>
         )}
 
@@ -65,8 +26,8 @@ export default function HomePage() {
           <div className="lg:col-span-8 space-y-8">
             {/* Top Story */}
             {NEWS_ARTICLES.slice(0, 1).map((article) => (
-              <Link key={article.id} href={`/article/${article.slug}`}>
-                <Card className="overflow-hidden border-0 bg-transparent shadow-none group cursor-pointer mb-8">
+              <Card key={article.id} className="overflow-hidden border-0 bg-transparent shadow-none group cursor-pointer">
+                <Link href={`/article/${article.slug}`}>
                   <div className="relative aspect-video overflow-hidden border-2 border-black">
                     <img 
                       src={article.image} 
@@ -92,16 +53,16 @@ export default function HomePage() {
                       <span>BY {article.author}</span>
                     </div>
                   </CardHeader>
-                </Card>
-              </Link>
+                </Link>
+              </Card>
             ))}
 
             {/* Sub-grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {NEWS_ARTICLES.slice(1, 6).map((article) => (
-                <Link key={article.id} href={`/article/${article.slug}`}>
-                  <Card className="border-0 bg-transparent shadow-none group cursor-pointer">
-                    <div className={`relative aspect-square md:aspect-video overflow-hidden border-2 border-black ${article.category === 'SPORT' ? 'border-r-8 border-b-8 border-pink-500' : ''}`}>
+              {NEWS_ARTICLES.slice(1, 4).map((article) => (
+                <Card key={article.id} className="border-0 bg-transparent shadow-none group cursor-pointer">
+                  <Link href={`/article/${article.slug}`}>
+                    <div className={`relative aspect-square md:aspect-video overflow-hidden border-2 border-black ${article.category === 'SPORT' ? 'border-r-8 border-b-8' : ''}`}>
                       <img 
                         src={article.image} 
                         alt={article.title}
@@ -122,8 +83,8 @@ export default function HomePage() {
                         {article.time}
                       </div>
                     </CardHeader>
-                  </Card>
-                </Link>
+                  </Link>
+                </Card>
               ))}
             </div>
           </div>
@@ -176,21 +137,6 @@ export default function HomePage() {
           </aside>
         </div>
       </main>
-
-      <footer className="bg-black text-white mt-12 py-12">
-        <div className="container mx-auto px-4 text-center space-y-6">
-          <h2 className="text-4xl font-black text-primary italic">THE GAZETTE</h2>
-          <div className="flex justify-center gap-6 text-xs uppercase font-bold tracking-widest text-slate-400 font-heading">
-            <Link href="#">About</Link>
-            <Link href="#">Contact</Link>
-            <Link href="#">Privacy Policy</Link>
-            <Link href="#">Terms</Link>
-          </div>
-          <p className="text-[10px] text-slate-600 font-body">
-            &copy; 2026 THE GAZETTE MEDIA GROUP. ALL RIGHTS RESERVED.
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }
